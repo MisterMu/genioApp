@@ -39,6 +39,8 @@ export class ChartCard extends React.Component {
           <Radar data={data} options={options}/>
         </View>
       );
+    } else {
+      return null;
     }
   }
 }

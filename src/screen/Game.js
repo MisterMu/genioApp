@@ -1,16 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Image, Alert, ScrollView, ActivityIndicator } from 'react-native';
-import axios from 'axios';
-import { AppBar, Button, GameCard } from '../component';
+import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
+import { AppBar, GameCard } from '../component';
 import { BgColor } from '../assest/color.js';
 
 export class GameScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
-    }
+      isReady: false
+    };
   }
+
   static navigationOptions = {
     tabBarLabel: 'เกม',
     tabBarIcon: ({ tintColor }) => (
@@ -21,26 +21,25 @@ export class GameScreen extends React.Component {
     ),
   };
 
-  componentDidMount() {
-    return axios.get('/game/listHighLevel/user_id/' + 3)
-      .then((res) => {
-        this.setState({
-          isLoading: false,
-          gameList: res.data.model
-        });
-      })
-      .catch(err => console.error(err));
-  }
-
   render() {
-    if (this.state.isLoading) {
+    if (!this.state.isReady) {
+      AsyncStorage.getItem('Games')
+        .then((resGames) => {
+          console.log('game success!!');
+          this.setState({
+            isReady: true,
+            games: JSON.parse(resGames)
+          });
+        })
+        .catch(err => console.error(err));
       return (
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator/>
+          <ActivityIndicator />
         </View>
       );
     } else {
-      let gameView = this.state.gameList.map((game) => {
+      console.log('Games', this.state);
+      let gameView = this.state.games.map((game) => {
         return <GameCard key={game.game_id} data={game}/>
       });
       return (

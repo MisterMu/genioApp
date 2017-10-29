@@ -12,7 +12,7 @@ export class CalendarCard extends React.Component {
         return obj.timestamp;
       }).map((obj) => {
         return obj.split(' ')[0];
-      });
+      })
 
       // add date to marked object
       let marked = {};

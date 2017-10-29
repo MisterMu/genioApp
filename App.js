@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar, NetInfo } from 'react-native';
-import { TabRouter, TabNavigator } from 'react-navigation';
+import { StyleSheet, View, StatusBar, NetInfo } from 'react-native';
 import axios from 'axios';
+import { TabNavigator } from 'react-navigation';
+import { DataLoader } from './src/component/';
 import { HomeScreen, GameScreen, ScoreScreen, SettingScreen } from './src/screen/';
 
 axios.defaults.baseURL = 'http://1101-beta.duckdns.org:8989/genio/api';
-// axios.defaults.baseURL = 'http://10.80.65.59:100'
 
 const AppNavigator = TabNavigator({
   Home: { screen: HomeScreen },
@@ -16,7 +16,6 @@ const AppNavigator = TabNavigator({
   tabBarPosition: 'bottom',
   animationEnabled: true,
   tabBarOptions: {
-    // activeTintColor: '#e91e63',
     showIcon: true,
     showLabel: false,
     style: {
@@ -35,10 +34,10 @@ NetInfo.isConnected.fetch().then(isConnected => {
 });
 
 export default class App extends React.Component {
-
   render() {
     return (
       <View style={{flex: 1}}>
+        <DataLoader />
         <View style={styles.statusBar}/>
         <View style={styles.container}>
           <AppNavigator/>

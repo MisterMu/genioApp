@@ -1,15 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Image, Alert, ScrollView, ActivityIndicator } from 'react-native';
-import axios from 'axios';
-import { AppBar, Button, ChartCard, ScoreIndicatorCard } from '../component';
+import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
+import { AppBar, ChartCard, ScoreIndicatorCard } from '../component';
 import { BgColor } from '../assest/color.js';
 
 export class ScoreScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
-    }
+      isReady: false
+    };
   }
 
   static navigationOptions = {
@@ -22,25 +21,24 @@ export class ScoreScreen extends React.Component {
     ),
   };
 
-  componentDidMount() {
-    return axios.get('/score/list/user_id/' + 3)
-      .then((res) => {
-        this.setState({
-          isLoading: false,
-          score: res.data.model
-        });
-      })
-      .catch(err => console.error(err));
-  }
-
   render() {
-    if (this.state.isLoading) {
+    if (!this.state.isReady) {
+      AsyncStorage.getItem('Score')
+        .then((resScore) => {
+          console.log('Score success!!');
+          this.setState({
+            isReady: true,
+            score: JSON.parse(resScore)
+          });
+        })
+        .catch(err => console.error(err));
       return (
         <View style={{flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator/>
+          <ActivityIndicator />
         </View>
       );
     } else {
+      console.log('Score', this.state);
       return (
         <View style={styles.host}>
           <AppBar title="คะแนน"/>

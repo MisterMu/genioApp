@@ -1,30 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, ScrollView, ActivityIndicator } from 'react-native';
-import axios from 'axios';
+import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
 import { AppBar, Button, CalendarCard, ScoreIndicatorCard } from '../component';
-import { Icons } from '../assest/icon';
 import { BgColor } from '../assest/color.js';
-
-function getHistory(u_id) {
-  body = {
-    user_id: u_id,
-    day: '',
-    month: '',
-    year: ''
-  };
-  return axios.post('/game/getHistory', body);
-}
-
-function getScore(u_id) {
-  return axios.get('/score/list/user_id/' + u_id);
-}
 
 export class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: true
-    }
+      isReady: false
+    };
   }
 
   static navigationOptions = {
@@ -37,27 +21,25 @@ export class HomeScreen extends React.Component {
     ),
   };
 
-  componentDidMount() {
-    return axios.all([getHistory(3), getScore(3)])
-      .then(axios.spread((resHistory, resScore) => {
-        this.setState({
-          isLoading: false,
-          score: resScore.data.model,
-          history: resHistory.data.model
-        });
-      }))
-      .catch(err => console.error(err));
-  }
-
   render() {
-    if (this.state.isLoading) {
+    if (!this.state.isReady) {
+      AsyncStorage.multiGet(['History', 'Score'])
+        .then((res) => {
+          console.log('home success!!');
+          this.setState({
+            isReady: true,
+            history: JSON.parse(res[0][1]),
+            score: JSON.parse(res[1][1])
+          });
+        })
+        .catch(err => console.error(err));
       return (
-        <View style={{flex: 1, justifyContent: 'center'}}>
-          <ActivityIndicator/>
+        <View style={{flex:1, justifyContent: 'center'}}>
+          <ActivityIndicator />
         </View>
       );
-    }
-    else {
+    } else {
+      console.log('Home', this.state);
       return (
         <View style={styles.host}>
           <AppBar title="หน้าหลัก"/>
