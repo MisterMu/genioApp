@@ -2,57 +2,39 @@ import React from 'react';
 import { View, AsyncStorage, ActivityIndicator } from 'react-native';
 import axios from 'axios';
 
-function getHistory(u_id) {
-  body = {
-    user_id: u_id,
-    day: '',
-    month: '',
-    year: ''
-  };
-  return axios.post('/game/getHistory', body);
+global.email = 'tongtananut@gmail.com'
+
+function checkEmail(email) {
+  return axios.post('/user/checkEmail', { email: email });
 }
 
-function getScore(u_id) {
-  return axios.get('/score/list/user_id/' + u_id);
-}
-
-function getListGame(u_id) {
-  return axios.get('/game/listHighLevel/user_id/' + u_id);
+function initialData(u_id) {
+  return axios.post('/user/initialData', { user_id: u_id });
 }
 
 export class DataLoader extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true
-    }
-  }
 
   componentDidMount() {
-    axios.all([getHistory(3), getScore(3), getListGame(3)])
-      .then(axios.spread((resHistory, resScore, resGames) => {
-        AsyncStorage.multiSet([
-          ['History', JSON.stringify(resHistory.data.model)],
-          ['Score', JSON.stringify(resScore.data.model)],
-          ['Games', JSON.stringify(resGames.data.model)]
-        ]).then(() => {
-          this.setState({
-            isLoading: false
-          });
-        }).catch(err => console.error(err));
-      }))
+    checkEmail(global.email)
+      .then((res) => {
+        global.user_id = res.data.user_id;
+        AsyncStorage.setItem('user_id', res.data.user_id + '')
+          .catch(err => console.error(err));
+        initialData(global.user_id)
+          .then((res) => {
+            AsyncStorage.multiSet([
+              ['History', JSON.stringify(res.data.model.history)],
+              ['Score', JSON.stringify(res.data.model.score)],
+              ['Games', JSON.stringify(res.data.model.game_list)]
+            ])
+            .catch(err => console.error(err));
+          })
+          .catch(err => console.error(err));
+      })
       .catch(err => console.error(err));
   }
 
   render() {
-    if (this.state.isLoading) {
-      return (
-        <View style={{position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, elevation: 100}}>
-        <ActivityIndicator/>
-      </View>
-      );
-    } else {
-      return (null);
-    }
+    return (null);
   }
 }
