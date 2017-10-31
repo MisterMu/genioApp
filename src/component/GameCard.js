@@ -9,7 +9,7 @@ export class GameCard extends React.Component {
           <View style={styles.img}/>
           <View style={styles.detail}>
             <Text style={[styles.text, {textAlign: 'left'}]}>{this.props.data.thai_game_name}</Text>
-            <Text style={[styles.text, {textAlign: 'right'}]}>ระดับ {this.props.data.current_level}</Text>
+            <Text style={[styles.text, {textAlign: 'right'}]}>ระดับ {this.props.data.game_level}</Text>
           </View>
         </View>
       );

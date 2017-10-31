@@ -25,7 +25,6 @@ export class HomeScreen extends React.Component {
     if (!this.state.isReady) {
       AsyncStorage.multiGet(['History', 'Score'])
         .then((res) => {
-          console.log('home success!!');
           this.setState({
             isReady: true,
             history: JSON.parse(res[0][1]),
@@ -39,7 +38,7 @@ export class HomeScreen extends React.Component {
         </View>
       );
     } else {
-      console.log('Home', this.state);
+      console.log('Home state', this.state);
       return (
         <View style={styles.host}>
           <AppBar title="หน้าหลัก"/>

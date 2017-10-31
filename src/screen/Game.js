@@ -25,7 +25,6 @@ export class GameScreen extends React.Component {
     if (!this.state.isReady) {
       AsyncStorage.getItem('Games')
         .then((resGames) => {
-          console.log('game success!!');
           this.setState({
             isReady: true,
             games: JSON.parse(resGames)
@@ -38,7 +37,7 @@ export class GameScreen extends React.Component {
         </View>
       );
     } else {
-      console.log('Games', this.state);
+      console.log('Games state', this.state);
       let gameView = this.state.games.map((game) => {
         return <GameCard key={game.game_id} data={game}/>
       });

@@ -25,7 +25,6 @@ export class ScoreScreen extends React.Component {
     if (!this.state.isReady) {
       AsyncStorage.getItem('Score')
         .then((resScore) => {
-          console.log('Score success!!');
           this.setState({
             isReady: true,
             score: JSON.parse(resScore)
@@ -38,7 +37,7 @@ export class ScoreScreen extends React.Component {
         </View>
       );
     } else {
-      console.log('Score', this.state);
+      console.log('Score state', this.state);
       return (
         <View style={styles.host}>
           <AppBar title="คะแนน"/>

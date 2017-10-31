@@ -5,20 +5,11 @@ import { Calendar } from 'react-native-calendars';
 export class CalendarCard extends React.Component {
 
   render() {
-    // check if props object has data
     if (this.props.data) {
-      // retype time to YYYY-MM-DD
-      date = this.props.data.map((obj) => {
-        return obj.timestamp;
-      }).map((obj) => {
-        return obj.split(' ')[0];
-      })
-
-      // add date to marked object
       let marked = {};
-      date.forEach((key) => {
-        marked[key] = { selected: true }
-      }, this);
+      Object.keys(this.props.data).map((date) => {
+        marked[date] = { selected: true }
+      });
 
       return (
         <View style={styles.host}>
