@@ -19,7 +19,7 @@ export class SettingScreen extends React.Component {
       <View style={styles.host}>
         <AppBar title="ตั้งค่า"/>
         <ScrollView contentContainerStyle={styles.content}>
-          <DateInputCard/>
+          {/* <DateInputCard/> */}
         </ScrollView>
       </View>
     );
