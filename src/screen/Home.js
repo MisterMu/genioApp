@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
+import { GoogleSignin } from 'react-native-google-signin'
 import { AppBar, Button, CalendarCard, ScoreIndicatorCard } from '../component';
 import { BgColor } from '../assest/color.js';
 
@@ -20,6 +21,13 @@ export class HomeScreen extends React.Component {
       />
     ),
   };
+
+  clearData = () => {
+    AsyncStorage.multiRemove(['email', 'u_id'])
+      .then(() => {
+        GoogleSignin.signOut().then(() => alert('Data has been clear!!'));
+      })
+  }
 
   render() {
     if (!this.state.isReady) {
@@ -45,7 +53,7 @@ export class HomeScreen extends React.Component {
           <ScrollView contentContainerStyle={styles.content}>
             <CalendarCard data={this.state.history}/>
             <ScoreIndicatorCard data={this.state.score}/>
-            <Button onPress={()=>{getScore(1)}} title="บริหารสมอง"/>
+            <Button onPress={this.clearData} title="บริหารสมอง"/>
           </ScrollView>
         </View>
       );
