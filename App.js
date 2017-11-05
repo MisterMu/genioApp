@@ -6,7 +6,7 @@ import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 import { DateInputCard } from './src/component/';
 import { HomeScreen, GameScreen, ScoreScreen, SettingScreen } from './src/screen/';
-import { BgColor } from './src/assest/color.js';
+import { BgColor } from './assets/color.js';
 
 axios.defaults.baseURL = 'http://1101-beta.duckdns.org:8989/genio/api';
 
@@ -53,7 +53,8 @@ export default class App extends React.Component {
     this.setState({modalVisible: true});
   }
 
-  initialData = () => [
+  initialData = () => {
+    console.log('test')
     axios.post('/user/initialData', { user_id: this.state.u_id})
       .then((res) => {
         AsyncStorage.multiSet([
@@ -67,7 +68,7 @@ export default class App extends React.Component {
         console.log(res.data.model)
       })
       .catch(err => console.error(err))
-  ]
+    }
 
   componentDidMount(){
     // 1. Have u_id in storage?
@@ -86,9 +87,11 @@ export default class App extends React.Component {
                 .then((user) => {
                   AsyncStorage.setItem('email', user.email);
                   this.setState({ email: user.email });
+                  console.log('EMAIL', this.state.email)
                   // 2. Was this email registered?
                   axios.post('/user/checkEmail', { email: this.state.email })
                     .then((res) => {
+                      console.log('SUCCESS', res.data.success)
                       // 2.a Yes, get u_id from email, get initial data, and go on Genio
                       if (res.data.success) {
                         AsyncStorage.setItem('u_id', res.data.user_id + '');
@@ -136,16 +139,17 @@ export default class App extends React.Component {
   render() {
     if (this.state.isReady === false) {
       return (
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {return null}}
-        >
-          <View style={styles.modal}>
-            <DateInputCard email={this.state.email} done={() => {this.closeModal(); this.initialData();}}/>
-          </View>
-        </Modal>
+        // <Modal
+        //   animationType="slide"
+        //   transparent={true}
+        //   visible={this.state.modalVisible}
+        //   onRequestClose={() => {return null}}
+        // >
+        //   <View style={styles.modal}>
+        //     <DateInputCard email={this.state.email} done={() => {this.closeModal(); this.initialData();}}/>
+        //   </View>
+        // </Modal>
+        <Text> asd </Text>
       );
     } else {
       return (

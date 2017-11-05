@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
 import { AppBar, GameCard } from '../component';
-import { BgColor } from '../assest/color.js';
+import { BgColor } from '~/assets/color.js';
 
 export class GameScreen extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export class GameScreen extends React.Component {
     tabBarLabel: 'เกม',
     tabBarIcon: ({ tintColor }) => (
       <Image
-        source={require('../assest/icon/game_blue.png')}
+        source={require('~/assets/icons/game_blue.png')}
         style={{tintColor: tintColor}}
       />
     ),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
 import { AppBar, ChartCard, ScoreIndicatorCard } from '../component';
-import { BgColor } from '../assest/color.js';
+import { BgColor } from '~/assets/color.js';
 
 export class ScoreScreen extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export class ScoreScreen extends React.Component {
     tabBarLabel: 'คะแนน',
     tabBarIcon: ({ tintColor }) => (
       <Image
-        source={require('../assest/icon/description_blue.png')}
+        source={require('~/assets/icons/description_blue.png')}
         style={{tintColor: tintColor}}
       />
     ),

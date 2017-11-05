@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { ThemeColor } from '../assest/color.js'
+import { ThemeColor } from '~/assets/color.js'
 
 export class Button extends React.Component {
   render() {

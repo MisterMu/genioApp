@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin'
 import { AppBar, Button, CalendarCard, ScoreIndicatorCard } from '../component';
-import { BgColor } from '../assest/color.js';
+import { BgColor } from '~/assets/color.js';
 
 export class HomeScreen extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export class HomeScreen extends React.Component {
     tabBarLabel: 'หน้าหลัก',
     tabBarIcon: ({ tintColor }) => (
       <Image
-        source={require('../assest/icon/home_blue.png')}
+        source={require('~/assets/icons/home_blue.png')}
         style={{tintColor: tintColor}}
       />
     ),
@@ -25,7 +25,9 @@ export class HomeScreen extends React.Component {
   clearData = () => {
     AsyncStorage.multiRemove(['email', 'u_id'])
       .then(() => {
-        GoogleSignin.signOut().then(() => alert('Data has been clear!!'));
+        GoogleSignin.signOut()
+          .then(() => alert('Data has been clear!!'))
+          .catch(err => console.error(err));
       })
   }
 
