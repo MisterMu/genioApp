@@ -41,6 +41,11 @@
 		672AC2AA0B3948AE90915542 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7CF06E1B7964702BDE57B91 /* SafariServices.framework */; };
 		A0AF7BDC1ACF49AB87F09DD1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80E6B1EB3C39465583AC9F5F /* SystemConfiguration.framework */; };
 		4F7FB5793D99472AB9F829FE /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C44ED386EC3F40DEB5E88343 /* AddressBook.framework */; };
+		4D649E78235B4B44AF8ABFB3 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7353BD0FC2674C34A300DE84 /* libRNSVG.a */; };
+		47FF059F4E764007B2A0BA3C /* THSarabunNew Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17646D586F1C4A8F93B45101 /* THSarabunNew Bold.ttf */; };
+		00E42144BFB54918B89B3C6E /* THSarabunNew BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F324C551EE314215A1DCECC4 /* THSarabunNew BoldItalic.ttf */; };
+		2C4ACFC765A1412B97AAB0F2 /* THSarabunNew Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5BB41DA609E84C0ABB747B31 /* THSarabunNew Italic.ttf */; };
+		84E0912ECBC44F2CA15021E5 /* THSarabunNew.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8FF5AA70E2245BEBAD6A497 /* THSarabunNew.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -274,6 +279,12 @@
 		C7CF06E1B7964702BDE57B91 /* SafariServices.framework */ = {isa = PBXFileReference; name = "SafariServices.framework"; path = "System/Library/Frameworks/SafariServices.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		80E6B1EB3C39465583AC9F5F /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 		C44ED386EC3F40DEB5E88343 /* AddressBook.framework */ = {isa = PBXFileReference; name = "AddressBook.framework"; path = "System/Library/Frameworks/AddressBook.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		911B3A86792846389474351C /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		7353BD0FC2674C34A300DE84 /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		17646D586F1C4A8F93B45101 /* THSarabunNew Bold.ttf */ = {isa = PBXFileReference; name = "THSarabunNew Bold.ttf"; path = "../assets/fonts/THSarabunNew Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		F324C551EE314215A1DCECC4 /* THSarabunNew BoldItalic.ttf */ = {isa = PBXFileReference; name = "THSarabunNew BoldItalic.ttf"; path = "../assets/fonts/THSarabunNew BoldItalic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		5BB41DA609E84C0ABB747B31 /* THSarabunNew Italic.ttf */ = {isa = PBXFileReference; name = "THSarabunNew Italic.ttf"; path = "../assets/fonts/THSarabunNew Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A8FF5AA70E2245BEBAD6A497 /* THSarabunNew.ttf */ = {isa = PBXFileReference; name = "THSarabunNew.ttf"; path = "../assets/fonts/THSarabunNew.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -307,6 +318,7 @@
 				672AC2AA0B3948AE90915542 /* SafariServices.framework in Frameworks */,
 				A0AF7BDC1ACF49AB87F09DD1 /* SystemConfiguration.framework in Frameworks */,
 				4F7FB5793D99472AB9F829FE /* AddressBook.framework in Frameworks */,
+				4D649E78235B4B44AF8ABFB3 /* libRNSVG.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +488,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				97970C5B90D7445B9A520A1E /* RNGoogleSignin.xcodeproj */,
+				911B3A86792846389474351C /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -497,6 +510,7 @@
 				00E356EF1AD99517003FC87E /* GenioAppTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				32DE98CC47A649238AC86136 /* Frameworks */,
+				4EFE1EA4F02B487EA888EABE /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -531,6 +545,18 @@
 				C44ED386EC3F40DEB5E88343 /* AddressBook.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+			path = "";
+		};
+		4EFE1EA4F02B487EA888EABE /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				17646D586F1C4A8F93B45101 /* THSarabunNew Bold.ttf */,
+				F324C551EE314215A1DCECC4 /* THSarabunNew BoldItalic.ttf */,
+				5BB41DA609E84C0ABB747B31 /* THSarabunNew Italic.ttf */,
+				A8FF5AA70E2245BEBAD6A497 /* THSarabunNew.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 			path = "";
 		};
@@ -903,6 +929,10 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				47FF059F4E764007B2A0BA3C /* THSarabunNew Bold.ttf in Resources */,
+				00E42144BFB54918B89B3C6E /* THSarabunNew BoldItalic.ttf in Resources */,
+				2C4ACFC765A1412B97AAB0F2 /* THSarabunNew Italic.ttf in Resources */,
+				84E0912ECBC44F2CA15021E5 /* THSarabunNew.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,10 +1067,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1062,10 +1094,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1088,6 +1122,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1109,6 +1144,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1139,10 +1175,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1173,10 +1211,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-google-signin\ios\RNGoogleSignin/**",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1202,6 +1242,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1226,6 +1267,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
