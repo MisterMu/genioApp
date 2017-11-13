@@ -1,0 +1,42 @@
+import { Dimensions, Platform, StatusBar } from 'react-native';
+
+const IS_ANDROID = Platform.OS === 'android';
+const { height, width } = Dimensions.get('window');
+
+const ANDROID_STATUSBAR = StatusBar.currentHeight;
+const DEVICE_HEIGHT = IS_ANDROID? height - ANDROID_STATUSBAR : height;
+const DEVICE_WIDTH = width;
+
+const TILE_SIZE = DEVICE_WIDTH * 0.11;
+const TILE_SHADOW_DEPTH = 6;
+const TILE_BORDER_RADIUS = TILE_SIZE * 0.1;
+
+const Q_BOARD_HEIGHT = DEVICE_HEIGHT * 0.3;
+const Q_BOARD_WIDTH = DEVICE_WIDTH * 0.7;
+
+const A_BOARD_HEIGHT = DEVICE_HEIGHT * 0.175;
+const A_BOARD_WIDTH = DEVICE_WIDTH;
+
+const BOARD_MARGIN = 20;
+const BOARD_HEIGHT = DEVICE_HEIGHT * 0.91;
+const BOARD_WIDTH = DEVICE_WIDTH;
+
+const TIME_BAR_HEIGHT = DEVICE_HEIGHT * 0.01;
+const TOP_BAR_HEIGHT = DEVICE_HEIGHT * 0.08;
+
+export default {
+  DEVICE_HEIGHT,
+  DEVICE_WIDTH,
+  TILE_SIZE,
+  TILE_SHADOW_DEPTH,
+  TILE_BORDER_RADIUS,
+  BOARD_MARGIN,
+  BOARD_HEIGHT,
+  BOARD_WIDTH,
+  TIME_BAR_HEIGHT,
+  TOP_BAR_HEIGHT,
+  Q_BOARD_HEIGHT,
+  Q_BOARD_WIDTH,
+  A_BOARD_HEIGHT,
+  A_BOARD_WIDTH
+};
