@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import { Icons } from '~/assets/icon';
+import { Icons } from '../../assets/icons';
 
 export class NavBar extends React.Component {
   render() {

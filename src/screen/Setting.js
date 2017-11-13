@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Image, Alert, ScrollView } from 'react-native';
 import { AppBar, Button, DateInputCard } from '../component'
-import { BgColor } from '~/assets/color.js';
+import { BgColor } from '../../assets/color.js';
 
 export class SettingScreen extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'ตั้งค่า',
     tabBarIcon: ({ tintColor }) => (
       <Image
-        source={require('~/assets/icons/setting_blue.png')}
+        source={require('../../assets/icons/setting_blue.png')}
         style={{tintColor: tintColor}}
       />
     ),
