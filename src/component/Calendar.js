@@ -18,6 +18,7 @@ export class CalendarCard extends React.Component {
             hideDayNames={true}
             hideArrows={true}
             markedDates={marked}
+            hideExtraDays={true}
           />
         </View>
       );
