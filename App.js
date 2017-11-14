@@ -1,16 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Text, StatusBar, NetInfo, AsyncStorage, Modal } from 'react-native';
+import { StyleSheet, View, Text, StatusBar, NetInfo, AsyncStorage, Modal, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator } from 'react-navigation';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
+import { PlayGround } from './src/playground/playground.js'
 import { DateInputCard } from './src/component/';
 import { HomeScreen, GameScreen, ScoreScreen, SettingScreen } from './src/screen/';
 import { BgColor } from './assets/color.js';
 
-axios.defaults.baseURL = 'http://1101-beta.duckdns.org:8989/genio/api';
+axios.defaults.baseURL = 'https://trewzaki-test-server.me/genio/api';
 
-const AppNavigator = TabNavigator({
+const MainAppNavigator = TabNavigator({
   Home: { screen: HomeScreen },
   Game: { screen: GameScreen },
   Score: { screen: ScoreScreen },
@@ -32,6 +33,13 @@ const AppNavigator = TabNavigator({
   }
 });
 
+const GameNavigator = StackNavigator({
+  Main: { screen: MainAppNavigator },
+  Playground: { screen: PlayGround }
+}, {
+  headerMode: 'none'
+});
+
 NetInfo.isConnected.fetch().then(isConnected => {
   console.log('First, is ' + (isConnected ? 'online' : 'offline'));
 });
@@ -41,7 +49,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isReady: false,
-      modalVisible: false
+      modalVisible: false,
+      test: false
     };
   }
 
@@ -54,7 +63,7 @@ export default class App extends React.Component {
   }
 
   initialData = () => {
-    console.log('test')
+    console.log('test', this.state);
     axios.post('/user/initialData', { user_id: this.state.u_id})
       .then((res) => {
         AsyncStorage.multiSet([
@@ -98,7 +107,7 @@ export default class App extends React.Component {
                         this.setState({u_id: res.data.user_id });
                         this.initialData();
                       }
-                      // 2.b No, Launch dateinput, get DoB, registering, get initial data and go on Genio
+                      // 2.b No, Launch dateinput, get DoB, get gender, registering, get initial data and go on Genio
                       else {
                         this.openModal();
                       }
@@ -134,28 +143,46 @@ export default class App extends React.Component {
         }
       })
       .catch(err => console.error(err))
-}
+  }
 
   render() {
+    // AsyncStorage.removeItem('u_id').then();
+    // GoogleSignin.signOut().then().catch(err => console.log(err));
+    if (this.state.test) {
+      return <GameNavigator/>
+    }
     if (this.state.isReady === false) {
       return (
-        // <Modal
-        //   animationType="slide"
-        //   transparent={true}
-        //   visible={this.state.modalVisible}
-        //   onRequestClose={() => {return null}}
-        // >
-        //   <View style={styles.modal}>
-        //     <DateInputCard email={this.state.email} done={() => {this.closeModal(); this.initialData();}}/>
-        //   </View>
-        // </Modal>
-        <Text> asd </Text>
+        <View style={{flex: 1}}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {return null}}
+          >
+            <View style={styles.modal}>
+              <DateInputCard
+                email={this.state.email}
+                done={() => {
+                  this.closeModal();
+                  AsyncStorage.getItem('u_id').then((value) => {
+                    this.setState({u_id: (value)});
+                    this.initialData();
+                  });
+                }}
+              />
+            </View>
+          </Modal>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <ActivityIndicator/>
+          </View>
+        </View>
       );
     } else {
       return (
         <View style={{flex: 1}}>
           <View style={styles.container}>
-            <AppNavigator/>
+            <MainAppNavigator/>
           </View>
         </View>
       );
