@@ -2,37 +2,39 @@ import React from 'react';
 import { StyleSheet, View, Text, Button, Modal, TouchableOpacity, AsyncStorage } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import axios from 'axios';
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 export class DateInputCard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {date: null};
+    var today = new Date();
+    this.state = {
+      date: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+      gender: 'male'
+    };
   }
 
   registerUser = () => {
-    body = {
+    var body = {
       email:this.props.email,
-      date_of_birth: this.state.date
+      date_of_birth: this.state.date,
+      gender: this.state.gender
     }
+    console.log(body)
     axios.post('/user/register', body)
       .then((res) => {
-        if (res.data.success) {
-          console.log('register success!!')
-          axios.post('/user/checkEmail', {email: this.props.email})
-            .then((res) => {
-              console.log('U_ID', res.data.user_id);
-              AsyncStorage.setItem('u_id', res.data.user_id + '');
-              this.props.done();
-            })
-            .catch(err => console.error(err))
-        } else {
-          console.log('register failed!!');
-        }
+        console.log('U_ID', res.data.user_id);
+        AsyncStorage.setItem('u_id', res.data.user_id + '')
+          .then(() => this.props.done());
       })
-      .catch((err) => console.error(err))
+      .catch((err) => console.log(err))
   }
 
   render() {
+    var radio_props = [
+      {label: 'ชาย      ', value: 'male'},
+      {label: 'หญิง', value: 'female'}
+    ]
     return (
       <View style={styles.host}>
         <View style={styles.container}>
@@ -42,6 +44,15 @@ export class DateInputCard extends React.Component {
             style={{alignSelf: 'center', width: 250, marginBottom: 75}}
             onDateChange={(date)=>{this.setState({date: date})}}
           />
+          <Text style={styles.text}>เพศ</Text>
+          <View style={{paddingLeft: 10}}>
+            <RadioForm
+              radio_props={radio_props}
+              initial={0}
+              onPress={(value) => {this.setState({gender: value})}}
+              formHorizontal={true}
+            />
+          </View>
         </View>
         <TouchableOpacity onPress={this.registerUser} style={styles.saveBtn}>
           <View>
@@ -67,8 +78,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40
   },
   text: {
-    fontSize: 16,
-    textAlignVertical: 'center'
+    fontSize: 22,
+    textAlignVertical: 'center',
+    fontFamily: 'sarabun_bold'
   },
   saveBtn: {
     position: 'absolute',
@@ -77,6 +89,8 @@ const styles = StyleSheet.create({
     padding: 8
   },
   saveTxt: {
-    fontSize: 18
+    fontSize: 26,
+    fontFamily: 'sarabun_bold',
+    color: 'black'
   }
 });
