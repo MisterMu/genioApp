@@ -69,7 +69,8 @@ export default class App extends React.Component {
         AsyncStorage.multiSet([
           ['History', JSON.stringify(res.data.model.history)],
           ['Score', JSON.stringify(res.data.model.score)],
-          ['Games', JSON.stringify(res.data.model.game_list)]
+          ['Games', JSON.stringify(res.data.model.game_list)],
+          ['Profile', JSON.stringify(res.data.model.profile)]
         ])
           .then(() => {
             this.setState({isReady: true})
