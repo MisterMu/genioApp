@@ -6,3 +6,4 @@ export * from './ScoreIndicator.js';
 export * from './GameCard.js';
 export * from './ChartCard.js';
 export * from './DateInput.js';
+export * from './SettingCard.js';
