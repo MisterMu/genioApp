@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Button, Modal, TouchableOpacity, AsyncStorage } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import axios from 'axios';
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
 
 export class DateInputCard extends React.Component {
   constructor(props) {
@@ -31,6 +31,7 @@ export class DateInputCard extends React.Component {
   }
 
   render() {
+    console.log(this.props.data)
     var radio_props = [
       {label: 'ชาย      ', value: 'male'},
       {label: 'หญิง', value: 'female'}
@@ -54,7 +55,12 @@ export class DateInputCard extends React.Component {
             />
           </View>
         </View>
-        <TouchableOpacity onPress={this.registerUser} style={styles.saveBtn}>
+        <TouchableOpacity
+          style={styles.saveBtn}
+          onPress={() => {
+            this.registerUser();
+          }}
+        >
           <View>
             <Text style={styles.saveTxt}> บันทึก </Text>
           </View>
