@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableWithoutFeedback, Image, Modal } from 'react-native';
+import { StyleSheet, View, Text, TouchableWithoutFeedback, Image, Modal, BackHandler } from 'react-native';
 import * as Progress from 'react-native-progress';
 import * as Animatable from 'react-native-animatable';
 
@@ -74,7 +74,7 @@ export class TextColorGame extends React.Component {
   }
 
   _right = () => {
-    this.refs.view.rubberBand(500).then();
+    this.refs.right_btn.rubberBand(500).then();
     setTimeout(() => {
       if (this.state.text === this.state.color) {
         this.rightAnswer();
@@ -85,6 +85,7 @@ export class TextColorGame extends React.Component {
   }
 
   _wrong = () => {
+    this.refs.wrong_btn.rubberBand(500).then();
     if (this.state.text !== this.state.color) {
       this.rightAnswer();
     } else {
@@ -93,19 +94,19 @@ export class TextColorGame extends React.Component {
   }
 
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      clearInterval(gameTime);
+    });
     gameTime = setInterval(() => {
       if (!this.state.isPause && this.state.timeLeft > 0 && this.state.countDown <= 0) {
         this.setState({ timeLeft: this.state.timeLeft - 1 });
-        console.log(this.state.timeLeft)
       }
     }, 1000);
     countDownToGame = setInterval(() => {
       if (this.state.countDown > 0) {
         this.setState({countDown: this.state.countDown - 1});
-        console.log(this.state.countDown)
       }
     }, 1000);
-    console.log(gameTime, countDownToGame)
   }
 
   render() {
@@ -162,12 +163,14 @@ export class TextColorGame extends React.Component {
             <Text style={[styles.q_text, {color: color[this.state.color]}]}>{text[this.state.text]}</Text>
           </View>
           <View style={styles.a_board}>
-            <TouchableWithoutFeedback onPress={this._wrong}>
-              <Animatable.View ref='wrong_btn' style={styles.a_button}>
-                <Text style={[styles.a_text, {color: 'red'}]}>ผิด</Text>
-              </Animatable.View>
-            </TouchableWithoutFeedback>
-            <Animatable.View ref='view' style={styles.a_button} useNativeDriver={true}>
+            <Animatable.View ref='wrong_btn' style={styles.a_button} useNativeDriver={true}>
+              <TouchableWithoutFeedback onPress={this._wrong}>
+                <View style={styles.a_container}>
+                  <Text style={[styles.a_text, {color: 'red'}]}>ผิด</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </Animatable.View>
+            <Animatable.View ref='right_btn' style={styles.a_button} useNativeDriver={true}>
               <TouchableWithoutFeedback onPress={this._right}>
                 <View style={styles.a_container}>
                   <Text style={[styles.a_text, {color: 'green'}]}>ถูก</Text>
