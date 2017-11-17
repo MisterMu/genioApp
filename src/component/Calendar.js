@@ -32,7 +32,8 @@ export class CalendarCard extends React.Component {
 
 const styles = StyleSheet.create({
   host: {
-    height: 280
+    height: 265,
+    marginBottom: 15
   },
   calendar: {
     borderRadius: 5,

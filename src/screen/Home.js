@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 15,
     backgroundColor: BgColor,
     flexDirection: 'column',
     justifyContent: 'space-between'
