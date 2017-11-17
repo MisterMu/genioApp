@@ -10,6 +10,7 @@ import { FinishedScreen } from '../finished.js';
 import { InitialGame } from '../initial.js';
 
 var tmp_text, tmp_color;
+var gmaeTime, countDownToGame;
 const GAME_TIME = 20;
 const CHOICE_QAUNTITY = 4;
 
@@ -68,7 +69,7 @@ export class TextColorGame extends React.Component {
 
   _exit = () => {
     this.setState({isPause: false});
-    clearInterval(this.gameTime);
+    clearInterval(gameTime);
     this.props.exit();
   }
 
@@ -92,23 +93,24 @@ export class TextColorGame extends React.Component {
   }
 
   componentDidMount() {
-    var gameTime = setInterval(() => {
+    gameTime = setInterval(() => {
       if (!this.state.isPause && this.state.timeLeft > 0 && this.state.countDown <= 0) {
         this.setState({ timeLeft: this.state.timeLeft - 1 });
         console.log(this.state.timeLeft)
       }
     }, 1000);
-    var countDownToGame = setInterval(() => {
+    countDownToGame = setInterval(() => {
       if (this.state.countDown > 0) {
         this.setState({countDown: this.state.countDown - 1});
         console.log(this.state.countDown)
       }
     }, 1000);
+    console.log(gameTime, countDownToGame)
   }
 
   render() {
     if (this.state.countDown <= 0) {
-      clearInterval(this.countDownToGame);
+      clearInterval(countDownToGame);
     }
     if (this.state.countDown > 0) {
       return (
