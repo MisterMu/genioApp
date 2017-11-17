@@ -21,10 +21,55 @@ export class TextColorGame extends React.Component {
       text: Math.floor(Math.random() * CHOICE_QAUNTITY),
       color: Math.floor(Math.random() * CHOICE_QAUNTITY),
       point: 0,
-      questionNum: 0,
+      questionNum: -1,
       isPause: false,
       timeLeft: GAME_TIME,
-      countDown: 3
+      countDown: 3,
+      wrong: false
+    }
+  }
+
+  _pause = () => {
+    this.setState({isPause: true})
+  }
+
+  _resume = () => {
+    this.setState({isPause: false})
+  }
+
+  _restart = () => {
+    this.setState({timeLeft: GAME_TIME, point: 0, questionNum: 0, isPause: false, countDown: 3});
+    countDownToGame = setInterval(() => {
+      if (this.state.countDown > 0) {
+        this.setState({countDown: this.state.countDown - 1});
+      }
+    }, 1000);
+    this.randomQuestion();
+  }
+
+  _exit = () => {
+    this.setState({isPause: false});
+    clearInterval(gameTime);
+    this.props.exit();
+  }
+
+  right = () => {
+    this.refs.right_btn.rubberBand(500).then();
+    this.setState({disable: true});
+    if (this.state.text === this.state.color) {
+      this.rightAnswer();
+    } else {
+      this.wrongAnswer();
+      }
+  }
+
+  wrong = () => {
+    this.refs.wrong_btn.rubberBand(500).then();
+    this.setState({disable: true});
+    if (this.state.text !== this.state.color) {
+      this.rightAnswer();
+    } else {
+      this.wrongAnswer();
     }
   }
 
@@ -41,8 +86,10 @@ export class TextColorGame extends React.Component {
     this.setState({
       text: tmp_text,
       color: tmp_color,
-      questionNum: this.state.questionNum + 1
+      questionNum: this.state.questionNum + 1,
+      disable: false
     });
+    this.refs.text.fadeIn(500).then().catch();
   }
 
   rightAnswer = () => {
@@ -51,52 +98,20 @@ export class TextColorGame extends React.Component {
   }
 
   wrongAnswer = () => {
-    this.randomQuestion();
+    this.setState({ wrong: true });
+    this.refs.result.fadeOut(1000).then(()=>{
+      this.setState({ wrong: false });
+      this.randomQuestion();
+    });
   }
 
-  _pause = () => {
-    this.setState({isPause: true})
-  }
-
-  _resume = () => {
-    this.setState({isPause: false})
-  }
-
-  _restart = () => {
-    this.setState({timeLeft: GAME_TIME, point: 0, questionNum: 0, isPause: false, countDown: 3});
-    this.randomQuestion();
-  }
-
-  _exit = () => {
-    this.setState({isPause: false});
-    clearInterval(gameTime);
-    this.props.exit();
-  }
-
-  _right = () => {
-    this.refs.right_btn.rubberBand(500).then();
-    setTimeout(() => {
-      if (this.state.text === this.state.color) {
-        this.rightAnswer();
-      } else {
-        this.wrongAnswer();
-      }
-    }, 500);
-  }
-
-  _wrong = () => {
-    this.refs.wrong_btn.rubberBand(500).then();
-    if (this.state.text !== this.state.color) {
-      this.rightAnswer();
-    } else {
-      this.wrongAnswer();
-    }
-  }
-
-  componentDidMount() {
+  componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', () => {
       clearInterval(gameTime);
     });
+  }
+
+  componentDidMount() {
     gameTime = setInterval(() => {
       if (!this.state.isPause && this.state.timeLeft > 0 && this.state.countDown <= 0) {
         this.setState({ timeLeft: this.state.timeLeft - 1 });
@@ -109,10 +124,11 @@ export class TextColorGame extends React.Component {
     }, 1000);
   }
 
+  compnonentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress');
+  }
+
   render() {
-    if (this.state.countDown <= 0) {
-      clearInterval(countDownToGame);
-    }
     if (this.state.countDown > 0) {
       return (
         <Modal
@@ -124,7 +140,10 @@ export class TextColorGame extends React.Component {
           <InitialGame detail={this.props.detail} time={this.state.countDown}/>
         </Modal>
       );
-    } else if (this.state.timeLeft <= 0) {
+    } else {
+      clearInterval(countDownToGame);
+    }
+    if (this.state.timeLeft <= 0) {
       return (
         <FinishedScreen detail={this.props.detail} exit={this._exit}/>
       );
@@ -160,18 +179,23 @@ export class TextColorGame extends React.Component {
         />
         <View style={styles.board}>
           <View style={styles.q_board}>
-            <Text style={[styles.q_text, {color: color[this.state.color]}]}>{text[this.state.text]}</Text>
+            <Animatable.View ref="result" style={styles.result} useNativeDriver={true}>
+              {this.state.wrong? <Image source={require('../../../assets/icons/wrong.png')}/> : null}
+            </Animatable.View>
+            <Animatable.Text style={[styles.q_text, {color: color[this.state.color]}]} ref="text" useNativeDriver={true}>
+              {this.state.wrong? '' : text[this.state.text]}
+            </Animatable.Text>
           </View>
           <View style={styles.a_board}>
             <Animatable.View ref='wrong_btn' style={styles.a_button} useNativeDriver={true}>
-              <TouchableWithoutFeedback onPress={this._wrong}>
+              <TouchableWithoutFeedback onPress={this.wrong} disabled={this.state.disable}>
                 <View style={styles.a_container}>
                   <Text style={[styles.a_text, {color: 'red'}]}>ผิด</Text>
                 </View>
               </TouchableWithoutFeedback>
             </Animatable.View>
             <Animatable.View ref='right_btn' style={styles.a_button} useNativeDriver={true}>
-              <TouchableWithoutFeedback onPress={this._right}>
+              <TouchableWithoutFeedback onPress={this.right} disabled={this.state.disable}>
                 <View style={styles.a_container}>
                   <Text style={[styles.a_text, {color: 'green'}]}>ถูก</Text>
                 </View>
@@ -259,6 +283,15 @@ const styles = StyleSheet.create({
     fontFamily: 'sarabun_bold',
     fontSize: 36,
     textAlignVertical: 'center'
+  },
+  result: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingVertical: Metrics.Q_BOARD_HEIGHT * 0.35
   }
 })
 
