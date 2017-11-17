@@ -1,13 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { Navigation, NavigationActions } from 'react-navigation';
 
 import { TextColorGame } from './games/text_color.js';
 import Metrics from './config/metrics.js';
 
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({routeName: 'Main'})
+  ]
+});
+
 export class PlayGround extends React.Component {
   _exit = () => {
-    console.log('playground navigate!!')
-    this.props.navigation.navigate('Home')
+    this.props.navigation.dispatch(resetAction)
   }
 
   render() {
