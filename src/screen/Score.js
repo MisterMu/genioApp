@@ -23,12 +23,15 @@ export class ScoreScreen extends React.Component {
 
   render() {
     if (!this.state.isReady) {
-      AsyncStorage.getItem('Score')
-        .then((resScore) => {
+      AsyncStorage.multiGet(['Score', 'AgeGroupScore', 'AllGroupScore'])
+        .then((res) => {
           this.setState({
             isReady: true,
-            score: JSON.parse(resScore)
-          });
+            myScore: JSON.parse(res[0][1]),
+            AgeGroupScore: JSON.parse(res[1][1]),
+            AllGroupScore: JSON.parse(res[2][1])
+          })
+          console.log(this.state);
         })
         .catch(err => console.error(err));
       return (
@@ -42,8 +45,10 @@ export class ScoreScreen extends React.Component {
         <View style={styles.host}>
           <AppBar title="คะแนน"/>
           <ScrollView contentContainerStyle={styles.content}>
-            <ChartCard data={this.state.score}/>
-            <ScoreIndicatorCard data={this.state.score}/>
+            <ScoreIndicatorCard data={this.state.myScore}/>
+            <ChartCard data={this.state.myScore} title="คะแนนของฉัน"/>
+            <ChartCard data={this.state.AgeGroupScore} title="คะแนนเฉลี่ยของกลุ่มคนในช่วงอายุ xx ปี"/>
+            <ChartCard data={this.state.AllGroupScore} title="คะแนนเฉลี่ยของกลุ่มผู้ใช้ทั้งหมด"/>
           </ScrollView>
         </View>
       );
@@ -56,9 +61,9 @@ const styles = StyleSheet.create({
     flex: 1
   },
   content: {
-    flex: 1,
     paddingHorizontal: 40,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 15,
     backgroundColor: BgColor,
     flexDirection: 'column',
     justifyContent: 'space-between'
