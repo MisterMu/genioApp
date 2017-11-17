@@ -63,22 +63,35 @@ export default class App extends React.Component {
   }
 
   initialData = () => {
+    return axios.post('/user/initialData', { user_id: this.state.u_id});
+  }
+
+  getScoreAgeGroup = () => {
+    return axios.get('/score/listOtherAgeGroup/user_id/' + this.state.u_id);
+  }
+
+  getScoreAllGroup = () => {
+    return axios.get('/score/listOtherAll/user_id/' + this.state.u_id);
+  }
+
+  getData = () => {
     console.log('test', this.state);
-    axios.post('/user/initialData', { user_id: this.state.u_id})
-      .then((res) => {
+    axios.all([this.initialData(), this.getScoreAgeGroup(), this.getScoreAllGroup()])
+      .then(axios.spread((resInit, resAgeGroup, resAllGroup) => {
+        console.log('Init', resInit.data.model)
+        console.log('age', resAgeGroup.data.model)
+        console.log('all', resAllGroup.data.model)
         AsyncStorage.multiSet([
-          ['History', JSON.stringify(res.data.model.history)],
-          ['Score', JSON.stringify(res.data.model.score)],
-          ['Games', JSON.stringify(res.data.model.game_list)],
-          ['Profile', JSON.stringify(res.data.model.profile)]
-        ])
-          .then(() => {
-            this.setState({isReady: true})
-          })
-        console.log(res.data.model)
-      })
+          ['History', JSON.stringify(resInit.data.model.history)],
+          ['Score', JSON.stringify(resInit.data.model.score)],
+          ['Games', JSON.stringify(resInit.data.model.game_list)],
+          ['Profile', JSON.stringify(resInit.data.model.profile)],
+          ['AgeGroupScore', JSON.stringify(resAgeGroup.data.model)],
+          ['AllGroupScore', JSON.stringify(resAllGroup.data.model)]
+        ]).then(() => this.setState({isReady: true}))
+      }))
       .catch(err => console.error(err))
-    }
+  }
 
   componentDidMount(){
     // 1. Have u_id in storage?
@@ -106,7 +119,7 @@ export default class App extends React.Component {
                       if (res.data.success) {
                         AsyncStorage.setItem('u_id', res.data.user_id + '');
                         this.setState({u_id: res.data.user_id });
-                        this.initialData();
+                        this.getData();
                       }
                       // 2.b No, Launch dateinput, get DoB, get gender, registering, get initial data and go on Genio
                       else {
@@ -140,7 +153,7 @@ export default class App extends React.Component {
         else {
           console.log('USER_ID', value);
           this.setState({ u_id: value });
-          this.initialData();
+          this.getData();
         }
       })
       .catch(err => console.error(err))
@@ -168,7 +181,7 @@ export default class App extends React.Component {
                   this.closeModal();
                   AsyncStorage.getItem('u_id').then((value) => {
                     this.setState({u_id: (value)});
-                    this.initialData();
+                    this.getData();
                   });
                 }}
               />
@@ -183,7 +196,7 @@ export default class App extends React.Component {
       return (
         <View style={{flex: 1}}>
           <View style={styles.container}>
-            <MainAppNavigator/>
+            <GameNavigator/>
           </View>
         </View>
       );
