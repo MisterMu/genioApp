@@ -47,7 +47,7 @@ export class ScoreScreen extends React.Component {
           <ScrollView contentContainerStyle={styles.content}>
             <ScoreIndicatorCard data={this.state.myScore}/>
             <ChartCard data={this.state.myScore} title="คะแนนของฉัน"/>
-            <ChartCard data={this.state.AgeGroupScore} title="คะแนนเฉลี่ยของกลุ่มคนในช่วงอายุ xx ปี"/>
+            <ChartCard data={this.state.AgeGroupScore.score} title={"คะแนนเฉลี่ยของกลุ่มคนในช่วงอายุ " + this.state.AgeGroupScore.age_group + " ปี"}/>
             <ChartCard data={this.state.AllGroupScore} title="คะแนนเฉลี่ยของกลุ่มผู้ใช้ทั้งหมด"/>
           </ScrollView>
         </View>
