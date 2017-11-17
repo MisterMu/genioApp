@@ -1,13 +1,17 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Radar } from 'react-native-pathjs-charts';
 
 export class ChartCard extends React.Component {
   render() {
     if (this.props.data) {
       let tmp = {};
+      let max_score = 0;
       this.props.data.forEach(function(obj) {
         tmp[obj.game_type_text] = obj.current_score;
+        if (obj.current_score > max_score) {
+          max_score = obj.current_score;
+        }
       }, this);
       let data = [tmp];
       let options = {
@@ -20,22 +24,18 @@ export class ChartCard extends React.Component {
           bottom: 0
         },
         r: 120,
-        max: 1000,
+        max: max_score,
         fill: 'blue',
         stroke: 'lightgrey',
-        animate: {
-          type: 'oneByOne',
-          duration: 200
-        },
         label: {
-          fontFamily: 'Arial',
+          fontFamily: 'sarabun_bold',
           fontSize: 14,
-          fontWeight: 200,
           fill: 'black'
         }
       };
       return (
         <View style={styles.host}>
+          <Text style={styles.title}>{this.props.title}</Text>
           <Radar data={data} options={options}/>
         </View>
       );
@@ -47,8 +47,16 @@ export class ChartCard extends React.Component {
 
 const styles = StyleSheet.create({
   host: {
-    flex: 1,
+    marginBottom: 15,
+    height: 350,
     elevation: 2,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    borderRadius: 5
+  },
+  title: {
+    fontFamily: 'sarabun_bold',
+    fontSize: 28,
+    textAlign: 'center',
+    paddingTop: 15
   }
 });
