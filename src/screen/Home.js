@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin'
 import { AppBar, Button, CalendarCard, ScoreIndicatorCard } from '../component';
-import { BgColor } from '../../assets/color.js';
 
 export class HomeScreen extends React.Component {
   constructor(props) {
@@ -65,6 +64,10 @@ export class HomeScreen extends React.Component {
       return (
         <View style={styles.host}>
           <AppBar title="หน้าหลัก"/>
+          <Image
+            source={require('../../assets/images/app_bg.jpg')}
+            style={styles.BG}
+          />
           <ScrollView contentContainerStyle={styles.content}>
             <CalendarCard data={this.state.history}/>
             <ScoreIndicatorCard data={this.state.score}/>
@@ -85,8 +88,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     paddingTop: 30,
     paddingBottom: 15,
-    backgroundColor: BgColor,
     flexDirection: 'column',
     justifyContent: 'space-between'
+  },
+  BG: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 });

@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, ScrollView, ActivityIndicator, AsyncStorage } from 'react-native';
 import { AppBar, GameCard } from '../component';
-import { BgColor } from '../../assets/color.js';
 
 export class GameScreen extends React.Component {
   constructor(props) {
@@ -44,6 +43,10 @@ export class GameScreen extends React.Component {
       return (
         <View style={styles.host}>
           <AppBar title="เกม"/>
+          <Image
+            source={require('../../assets/images/app_bg.jpg')}
+            style={styles.BG}
+          />
           <ScrollView contentContainerStyle={styles.content}>
             {gameView}
           </ScrollView>
@@ -55,11 +58,17 @@ export class GameScreen extends React.Component {
 
 const styles = StyleSheet.create({
   host: {
-    flex: 1,
-    backgroundColor: BgColor
+    flex: 1
   },
   content: {
     paddingHorizontal: 40,
     paddingVertical: 30,
+  },
+  BG: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 });

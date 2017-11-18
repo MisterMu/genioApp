@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Image, Alert, ScrollView, AsyncStorage, ActivityIndicator } from 'react-native';
 import { AppBar, Button, DateInputCard, SettingCard } from '../component'
-import { BgColor } from '../../assets/color.js';
 
 export class SettingScreen extends React.Component {
   constructor(props) {
@@ -40,6 +39,10 @@ export class SettingScreen extends React.Component {
       return (
         <View style={styles.host}>
           <AppBar title="ตั้งค่า"/>
+          <Image
+            source={require('../../assets/images/app_bg.jpg')}
+            style={styles.BG}
+          />
           <ScrollView contentContainerStyle={styles.content}>
             <SettingCard data={this.state}/>
           </ScrollView>
@@ -63,6 +66,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 30,
     paddingHorizontal: 40,
-    backgroundColor: BgColor,
+  },
+  BG: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 });
